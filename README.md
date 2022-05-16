@@ -21,11 +21,11 @@ English | [简体中文](./README-zh.md)
 ## Build Setup
 
 ```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-admin-template.git
+# 克隆项目
+git clone git@github.com:chency87/iot-vas-web.git
 
-# enter the project directory
-cd vue-admin-template
+# 进入项目目录
+cd iot-vas-web
 
 # install dependency
 npm install
