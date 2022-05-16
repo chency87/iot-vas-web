@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div>
-      <panel-group :task-data="name" />
+      <panel-group :task-data="taskData" />
+      <asset-panel :report-data="scanReport" />
     </div>
   </div>
 </template>
@@ -9,12 +10,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import PanelGroup from './components/PanelGroup'
+import AssetPanel from './components/AssetPanel'
+import { getTaskReport } from '@/api/task'
 
 export default {
   name: 'Report',
-  components: { PanelGroup },
+  components: {
+    PanelGroup,
+    AssetPanel
+  },
   data() {
     return {
+      taskData: {},
+      scanReport: [],
       taskId: ''
     }
   },
@@ -29,7 +37,10 @@ export default {
   methods: {
     fetchData() {
       this.taskId = this.$route.query.taskId
-      console.log(this.taskId)
+      getTaskReport(this.taskId).then(response => {
+        this.taskData = response.data.data
+        this.scanReport = this.taskData.scan_report
+      })
     }
   }
 }

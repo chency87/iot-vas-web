@@ -1,56 +1,48 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+    <el-col :xs="24" :sm="24" :lg="24" class="card-panel-col">
+      <el-card class="box-card" shadow="hover">
+        <div slot="header" class="clearfix">
+          <span>任务信息</span>
+          <el-tag type="success" style="margin-left: 25px;" effect="dark" size="small">已完成</el-tag>
+          <el-tag type="info" style="margin-left: 10px;" size="small">运行时间：{{ taskData.create_time }} - {{ taskData.end_time }}</el-tag>
+          <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         </div>
-        <div class="card-panel-description card-panel-summary-description">
-          <div class=" card-panel-text card-panel-summary-text">
-            <div class="card-panel-summary-list">
-              <ul>
-                <li>网络服务风险：<el-tag size="mini" :type="riskSummary.net_services_risk | statusFilter"> {{ riskSummary.net_services_risk }}</el-tag></li>
-                <li>加解密风险：<el-tag size="mini" :type="riskSummary.crypto_risk | statusFilter"> {{ riskSummary.crypto_risk }}</el-tag></li>
-                <li>内核风险：<el-tag size="mini" :type="riskSummary.kernel_risk | statusFilter"> {{ riskSummary.kernel_risk }}</el-tag></li>
-                <li>客户端工具风险：<el-tag size="mini" :type="riskSummary.client_tools_risk | statusFilter"> {{ riskSummary.client_tools_risk }}</el-tag></li>
-              </ul>
-            </div>
-          </div>
-          <!-- <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" /> -->
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-bug">
-          <svg-icon icon-class="bug" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            风险组件
-          </div>
-          <count-to :start-val="0" :end-val="vulnerableComponentCount" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="vulnerabilities" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            CVE漏洞
-          </div>
-          <count-to :start-val="0" :end-val="CVECount" :duration="3200" class="card-panel-num" />
-        </div>
-      </div>
+        <el-form label-position="right" label-width="80px" :model="taskData.params">
+          <el-row :gutter="36">
+            <el-col :span="12">
+              <el-form-item label="任务名称">
+                <el-input v-model="taskData.params.name" disabled />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="任务ID" prop="id">
+                <el-input v-model="taskData.params.id" placeholder="请输入内容" disabled>
+                  <template slot="append" icon="el-icon-search"><i class="el-icon-tickets" /></template>
+                </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="探测目标" prop="target">
+                <el-input v-model="taskData.params.target" placeholder="请输入内容" disabled>
+                  <template slot="append" icon="el-icon-search"><i class="el-icon-tickets" /></template>
+                </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="探测命令">
+                <el-input v-model="taskData.params.config" disabled />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-card>
+
     </el-col>
   </el-row>
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
 
 export default {
   filters: {
@@ -66,7 +58,6 @@ export default {
     }
   },
   components: {
-    CountTo
   },
   props: {
     taskData: {
@@ -76,36 +67,16 @@ export default {
   },
   data() {
     return {
-      riskSummary: {},
-      vulnerableComponentCount: 0,
-      CVECount: 0,
-      CriticalCVECount: 0
     }
   },
   watch: {
     taskData: {
       deep: true,
       handler(val) {
-        this.initRiskSummary(val)
       }
     }
   },
   methods: {
-    initRiskSummary() {
-      this.riskSummary = this.taskData.risk_summary
-      this.vulnerableComponentCount = this.taskData.vulnerable_components.length
-      this.taskData.vulnerable_components.forEach(element => {
-        this.CVECount = this.CVECount + element.vulnerabilities.length
-        element.vulnerabilities.forEach(ele => {
-          if (ele.cvss > 7) {
-            this.CriticalCVECount = this.CriticalCVECount + 1
-          }
-        })
-      })
-    },
-    handleSetLineChartData(type) {
-      console.log(type)
-    }
   }
 }
 </script>
@@ -127,45 +98,6 @@ export default {
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
-
-    &:hover {
-      .card-panel-icon-wrapper {
-        color: #fff;
-      }
-
-      .icon-bug {
-        background: #40c9c6;
-      }
-
-      .icon-message {
-        background: #36a3f7;
-      }
-
-      .icon-money {
-        background: #34bfa3;
-      }
-
-      .icon-shopping {
-        background: #f4516c
-      }
-    }
-
-    .icon-bug {
-      color: #40c9c6;
-    }
-
-    .icon-message {
-      color: #36a3f7;
-    }
-
-    .icon-money {
-      color: #34bfa3;
-    }
-
-    .icon-shopping {
-      color: #f4516c
-    }
-
     .card-panel-icon-wrapper {
       float: left;
       margin: 14px 0 0 14px;
@@ -177,72 +109,6 @@ export default {
     .card-panel-icon {
       float: left;
       font-size: 48px;
-    }
-
-    .card-panel-description {
-      float: right;
-      font-weight: bold;
-      margin: 26px;
-      margin-left: 0px;
-
-      .card-panel-text {
-        line-height: 18px;
-        color: rgba(0, 0, 0, 0.45);
-        font-size: 16px;
-        margin-bottom: 12px;
-      }
-      .card-panel-num {
-        font-size: 20px;
-      }
-    }
-    .card-panel-summary-description {
-        margin: 8px;
-        .card-panel-summary-text {
-          color: rgba(0, 0, 0, 0.45);
-          margin-top: 0;
-          font-size: 10px;
-          width: 100%;
-          padding: 0;
-          .card-panel-summary-title {
-            line-height: 14px;
-            font-size: 16px;
-            // margin-bottom: 5px;
-            padding: 0;
-            margin: 0;
-          }
-          .card-panel-summary-list {
-            line-height: 14px;
-            font-size: 12px;
-            margin-bottom: 0px;
-            ul {
-                list-style-type: none;
-                padding: 0;
-                margin: 0; /* Remove margins */
-                li {
-                    margin: 3px;
-                }
-            }
-          }
-      }
-    }
-  }
-}
-
-@media (max-width:550px) {
-  .card-panel-description {
-    display: none;
-  }
-
-  .card-panel-icon-wrapper {
-    float: none !important;
-    width: 100%;
-    height: 100%;
-    margin: 0 !important;
-
-    .svg-icon {
-      display: block;
-      margin: 14px auto !important;
-      float: none !important;
     }
   }
 }

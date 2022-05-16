@@ -28,6 +28,148 @@ const taskList = [
   }
 ]
 
+const reportData = {
+  task_id: '',
+  create_time: '2022.06.06',
+  end_time: '2023.21.09',
+  params: {
+    'name': '终端探测(282.102.188.9/24)',
+    'config': 'app.backend.handlers.schedule.core:exec_namp_scan',
+    'id': 'cron-489053f2861e4f91ae78b8ffc78946a444',
+    'createdAt': '2021-08-09',
+    'status': 'Pause',
+    'target': '822.102.188.9/24',
+    'finished': '2022-09-12 12:37:59'
+  },
+  scan_report: [
+    {
+      '198.53.49.46': {
+        'OS': 'win 10',
+        'vendor': 'Simons',
+        'model_name': 'S7',
+        'firmware_version': '5.2.0',
+        'is_discontinued': 'Flase',
+        'cve_list': [],
+        'decive_type': 'PLC',
+        'firmware_infor': {
+          'name': '',
+          'version': '',
+          'shar2': ''
+        },
+        'tcp': [
+        ],
+        'udp': [
+          {
+            'port': 17,
+            'service': 'qotd',
+            'hostname': '12312312'
+          },
+          {
+            'port': 19,
+            'service': 'chargen',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 67,
+            'service': 'dhcps',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 68,
+            'service': 'dhcpc',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 123,
+            'service': 'ntp',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 161,
+            'service': 'snmp',
+            'snmp_sysdescr': 'TANDBERG Codec\nSoftW: F8.1 NTSC\nMCU: TANDBERG Edge 95MXP\nDate: 2009-09-07\nS/N: 26A74922\nBootSW: Rev. 1.15, 2008-01-04\nBoard: 101070 rev. 07\n  System uptime: 1d06h40m35.24s (11043524 timeticks)'
+          },
+          {
+            'port': 520,
+            'service': 'route',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 962,
+            'service': 'unknown',
+            'snmp_sysdescr': ''
+          }
+        ]
+      }
+    },
+    {
+      '198.53.49.46': {
+        'OS': 'win 10',
+        'vendor': 'Simons',
+        'model_name': 'S7',
+        'firmware_version': '5.2.0',
+        'is_discontinued': 'Flase',
+        'cve_list': [{
+          'cve_id': '123123',
+          'cvss': '1212322'
+        }],
+        'decive_type': 'PLC',
+        'firmware_infor': {
+          'name': '',
+          'version': '',
+          'shar2': ''
+        },
+        'tcp': [
+  
+        ],
+        'udp': [
+          {
+            'port': 17,
+            'service': 'qotd',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 19,
+            'service': 'chargen',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 67,
+            'service': 'dhcps',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 68,
+            'service': 'dhcpc',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 123,
+            'service': 'ntp',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 161,
+            'service': 'snmp',
+            'snmp_sysdescr': 'TANDBERG Codec\nSoftW: F8.1 NTSC\nMCU: TANDBERG Edge 95MXP\nDate: 2009-09-07\nS/N: 26A74922\nBootSW: Rev. 1.15, 2008-01-04\nBoard: 101070 rev. 07\n  System uptime: 1d06h40m35.24s (11043524 timeticks)'
+          },
+          {
+            'port': 520,
+            'service': 'route',
+            'snmp_sysdescr': ''
+          },
+          {
+            'port': 962,
+            'service': 'unknown',
+            'snmp_sysdescr': ''
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
 module.exports = [
   {
     url: '/tasks',
@@ -108,6 +250,7 @@ module.exports = [
       code: 20000,
       data: {
         task_id: 'iijioji',
+        data: reportData,
         status: true
       }
     }
