@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function getAllTask(start, length, search) {
 //   var queryString = Object.keys(search).map(key => key + '=' + search[key]).join('&');
   return request({
-    url: '/tasks',
+    url: '/task',
     method: 'get',
     params: { start, length, search }
   })

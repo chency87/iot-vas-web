@@ -220,6 +220,7 @@ export default {
         this.deviceTableData = response.data.data
         this.total = response.data.total
         this.listLoading = false
+        console.log(response)
       })
     }
   }
