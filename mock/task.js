@@ -120,7 +120,7 @@ const reportData = {
           'shar2': ''
         },
         'tcp': [
-  
+
         ],
         'udp': [
           {
@@ -168,7 +168,6 @@ const reportData = {
     }
   ]
 }
-
 
 module.exports = [
   {

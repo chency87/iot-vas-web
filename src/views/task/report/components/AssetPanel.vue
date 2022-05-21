@@ -30,8 +30,9 @@
           </template>
           <div>
             <el-divider content-position="left">端口信息</el-divider>
+            {{item.tcp.concat(item.udp)}}
             <el-table
-              :data="Object.assign(item.tcp, item.udp)"
+              :data="item.tcp.concat(item.udp)"
               stripe
               style="width: 100%"
             >

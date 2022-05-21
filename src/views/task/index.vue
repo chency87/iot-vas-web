@@ -139,6 +139,7 @@ export default {
     handleUpdateTaskStatus(idx, data, currentStatus) {
       const req = {}
       req[data] = currentStatus
+      // code:20000 data:{task_id:status}
       updateTaskStatus(req).then(response => {
         this.taskList[idx]['status'] = Object.values(response.data)[0]
       })
@@ -163,7 +164,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        console.log(data)
         deleteTask([data]).then(response => {
+          console.log(response.data)
           this.$message({
             message: `任务删除 ${response.data.status}`,
             type: 'success',
@@ -186,6 +189,7 @@ export default {
     handleDelete() {
       if (this.selectedTaskIds.length > 0) {
         deleteTask(this.selectedTaskIds).then(response => {
+          console.log(response.data)
           this.$message({
             message: `Tasks Delete ${response.data.status}`,
             type: 'success',

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+
 import PanelGroup from './components/PanelGroup'
 import AssetPanel from './components/AssetPanel'
 import { getTaskReport } from '@/api/task'
@@ -27,9 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+
   },
   created() {
     this.fetchData()
@@ -37,9 +35,15 @@ export default {
   methods: {
     fetchData() {
       this.taskId = this.$route.query.taskId
+      console.log(this.taskId)
       getTaskReport(this.taskId).then(response => {
-        this.taskData = response.data.data
+        console.log(response)
+        this.taskData = response.data
+        console.log('++++++++++++')
+        console.log(response.data)
         this.scanReport = this.taskData.scan_report
+        console.log('**************')
+        console.log(this.taskData.scan_report)
       })
     }
   }

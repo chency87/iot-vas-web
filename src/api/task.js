@@ -39,8 +39,18 @@ export function updateTaskStatus(data) {
 export function getTaskReport(task_id) {
   //   var queryString = Object.keys(search).map(key => key + '=' + search[key]).join('&');
   return request({
-    url: `/task/report`,
+    url: `/task/scanreport`,
     method: 'get',
     params: { task_id }
   })
+}
+
+export function createTask(data) {
+  return request(
+    {
+      url: `/task/create`,
+      method: 'post',
+      data
+    }
+  )
 }

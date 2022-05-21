@@ -5,33 +5,33 @@
         <div slot="header" class="clearfix">
           <span>任务信息</span>
           <el-tag type="success" style="margin-left: 25px;" effect="dark" size="small">已完成</el-tag>
-          <el-tag type="info" style="margin-left: 10px;" size="small">运行时间：{{ taskData.create_time }} - {{ taskData.end_time }}</el-tag>
+          <el-tag type="info" style="margin-left: 10px;" size="small">运行时间：{{ taskInfo.create_time }} - {{ taskInfo.end_time }}</el-tag>
           <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
         </div>
-        <el-form label-position="right" label-width="80px" :model="taskData.params">
+        <el-form label-position="right" label-width="80px" :model="taskInfo.params">
           <el-row :gutter="36">
             <el-col :span="12">
-              <el-form-item label="任务名称">
-                <el-input v-model="taskData.params.name" disabled />
+              <el-form-item label="任务名称" prop="name">
+                <el-input v-model="taskInfo.params.name" disabled />
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="任务ID" prop="id">
-                <el-input v-model="taskData.params.id" placeholder="请输入内容" disabled>
+                <el-input v-model="taskInfo.params.id" placeholder="请输入内容" disabled>
                   <template slot="append" icon="el-icon-search"><i class="el-icon-tickets" /></template>
                 </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="探测目标" prop="target">
-                <el-input v-model="taskData.params.target" placeholder="请输入内容" disabled>
+                <el-input v-model="taskInfo.params.target" placeholder="请输入内容" disabled>
                   <template slot="append" icon="el-icon-search"><i class="el-icon-tickets" /></template>
                 </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="探测命令">
-                <el-input v-model="taskData.params.config" disabled />
+<!--                <el-input v-model="taskInfo.params.config" disabled />-->
               </el-form-item>
             </el-col>
           </el-row>
@@ -67,16 +67,35 @@ export default {
   },
   data() {
     return {
+      taskInfo: {
+        create_time: '',
+        end_time: '',
+        params: {
+          name: '',
+          id: '',
+          target: '',
+          config: []
+        }
+      }
     }
   },
   watch: {
     taskData: {
       deep: true,
       handler(val) {
+        this.initPanel(val)
       }
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.initPanel(this.taskData)
+    })
+  },
   methods: {
+    initPanel(data) {
+      this.taskInfo = data
+    }
   }
 }
 </script>
