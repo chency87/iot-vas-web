@@ -6,14 +6,15 @@ const table = require('./table')
 const role = require('./role')
 const task = require('./task')
 const fingerprint = require('./fingerprint')
+const device = require('./plugin')
 
 const mocks = [
   ...user,
   ...table,
   ...role,
   ...task,
-  ...fingerprint
-
+  ...fingerprint,
+  ...device
 ]
 
 // for front mock

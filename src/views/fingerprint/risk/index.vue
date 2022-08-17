@@ -70,6 +70,7 @@ export default {
       'name'
     ])
   },
+  // 钩子函数
   mounted() {
     this.$nextTick(() => {
       this.fetchData()

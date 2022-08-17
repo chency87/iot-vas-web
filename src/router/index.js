@@ -85,7 +85,7 @@ export const constantRoutes = [
     children: [{
       path: 'index',
       name: 'IoT 资产监控',
-      component: () => import('@/views/device/index'),
+      component: () => import('@/views/device'),
       meta: { title: 'IoT 资产监控', icon: 'el-icon-video-camera' }
     }]
   },
