@@ -47,6 +47,19 @@
           label="Valid To"
           sortable
         />
+        <el-table-column
+          prop="operate"
+          label="操作"
+          align="center"
+          width="500"
+          style="right: auto">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row.name)">验证</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-col>
   </el-row>

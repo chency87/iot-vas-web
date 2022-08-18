@@ -35,6 +35,19 @@
             </ol>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="operate"
+          label="操作"
+          align="center"
+          width="500"
+          style="right: auto">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row.name)">验证</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-col>
   </el-row>
@@ -42,6 +55,7 @@
 
 <script>
 import { getConfigIssues } from '@/api/fingerprint'
+import { deleteDevice } from '@/api/plugin'
 
 export default {
   components: {
@@ -69,6 +83,31 @@ export default {
     handleSetLineChartData(type) {
     //   this.$emit('handleSetLineChartData', type)
       console.log(type)
+    },
+    handleEdit(index, row) {
+      console.log(index, row)
+    },
+    handleDelete(index, row) {
+      this.$confirm('此操作将永久删除该组件，是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        console.log({ 'name': row })
+        deleteDevice({ 'name': row }).then(response => {
+          console.log(response.data)
+          this.$message({
+            message: '组件删除成功',
+            type: 'success',
+            duration: 5 * 1000
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

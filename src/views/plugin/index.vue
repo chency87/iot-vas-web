@@ -7,7 +7,7 @@
     </el-row>
     <div>
       <el-row :gutter="20">
-        <el-col>
+        <el-col :span="12">
           <el-table
             :data="tableData"
             height="400"
@@ -18,26 +18,22 @@
               prop="date"
               label="日期"
               align="center"
-              width="500"
+              width="200"
             >
             </el-table-column>
             <el-table-column
               prop="name"
               label="脚本"
               align="center"
-              width="500">
+              width="350">
             </el-table-column>
             <el-table-column
               prop="operate"
               label="操作"
               align="center"
-              width="500"
+              width="350"
               style="right: auto">
               <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  type="brand color"
-                  @click="handleEdit(scope.$index, scope.row)">下载</el-button>
                 <el-button
                   size="mini"
                   type="danger"
@@ -46,19 +42,16 @@
             </el-table-column>
           </el-table>
         </el-col>
-        <el-col>
+        <el-col :span="12">
           <el-upload
             class="upload-demo"
+            drag
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            multiple>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传NSE/py文件，且不超过5mb
+            </div>
           </el-upload>
         </el-col>
       </el-row>
@@ -74,8 +67,8 @@ export default {
   data() {
     return {
       tableData: [{
-        date: '1-2-3',
-        name: '123.nse'
+        date: '',
+        name: ''
       }],
       selectedFileName: [],
       listLoading: true,
@@ -118,18 +111,6 @@ export default {
           message: '已取消删除'
         })
       })
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
     },
     fetchData() {
       this.listLoading = true
